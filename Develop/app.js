@@ -241,3 +241,43 @@ inquirer
                 internArr.push(intern);
             })
         }
+        // creates the cards to be displayed with css classes
+        const manager = new Manager(managerName, managerId, managerEmail, managerOffice);
+        const engineersDyn = engineerArr.map(function (engineer) {
+            return `
+            <div class="card col-sm-3">
+                <div class="card-header">
+                    <h3>${engineer.name}</h3>
+                    <h4><i class="fas fa-cog"></i> ${engineer.role}</h4>
+                </div>
+                <div class="card-body container">
+                    <div class="attribute">ID: ${engineer.id}</div>
+                    <div class="attribute">Email: ${engineer.email}</div>
+                    <div class="attribute">GitHub: <a href="https://github.com/${engineer.github}" target="_blank">${engineer.github}</a></div>
+                </div>
+            </div>`
+        }).join("");
+
+        const internsDyn = internArr.map(function (intern) {
+            return `
+            <div class="card col-sm-3">
+            <div class="card-header">
+                <h3>${intern.name}</h3>
+                <h4><i class="fas fa-user-graduate"></i> ${intern.role}</h4>
+            </div>
+            <div class="card-body container">
+                <div class="attribute">ID: ${intern.id}</div>
+                <div class="attribute">Email: ${intern.email}</div>
+                <div class="attribute">School: ${intern.school}</div>
+            </div>
+        </div>`
+        }).join("");
+
+        fs.writeFile("./output/team.html", generateHTML(manager, engineersDyn, internsDyn), function (err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Successfully created team.html in output folder");
+        })
+        console.log(internArr, engineerArr, manager);
+    })
